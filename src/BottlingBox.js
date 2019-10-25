@@ -6,7 +6,6 @@ export default class BottlingBox {
         this.params = params;
         this.curentBarrelIndex = 0;
         this.currentBarrel = this.barrels[this.curentBarrelIndex];
-        
     }
     launch(barrel = this.currentBarrel) {
         if (!barrel) return;
@@ -14,26 +13,27 @@ export default class BottlingBox {
         console.log(`Бочка № ${this.curentBarrelIndex + 1} - ${roundFloat(barrel.volume)} литров.`, barrel.useVolume !== 0 ? `Использовано:${roundFloat(barrel.useVolume)} л` : '');
         console.log('-------------------------');
 
-        this.curentBarrelIndex++
+        this.curentBarrelIndex++;
+
         while (!barrel.isEmpty()) {
-            const res = barrel.bottling(this.params, ); //не заполненое ведро
-            if (res !== undefined) {
+            const res = barrel.bottling(this.params); 
+            //бочка закончилась, а ведро не заполнилось 
+            if (res !== undefined) { 
                 this.nextBarrel();
                 let newBarrel = this.currentBarrel;
                 if (newBarrel) {
                     newBarrel = barrel.addToBucket(newBarrel, res);
-                    this.info(barrel)
+                    this.info(barrel);
                     this.launch(newBarrel);
-                    return
+                    return;
                 }
             }
         }
         this.nextBarrel();
-        this.info(barrel)
-        if(this.currentBarrel !== undefined){
+        this.info(barrel);
+        if (this.currentBarrel !== undefined) {
             this.launch();
         }
-        
     }
 
     nextBarrel() {
@@ -41,6 +41,6 @@ export default class BottlingBox {
     }
 
     info(barrel) {
-        console.log(`Бочка № ${this.curentBarrelIndex } - Налито успешно: ${barrel.bucketCounter}. Провальный налив: ${roundFloat(barrel.lostVolume)} литров. `);
+        console.log(`Бочка № ${this.curentBarrelIndex} - Налито успешно: ${barrel.bucketCounter}. Провальный налив: ${roundFloat(barrel.lostVolume)} литров. `);
     }
 }

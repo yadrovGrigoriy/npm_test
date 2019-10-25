@@ -5,7 +5,7 @@ export default class Barrel {
     constructor(volume) {
         this.fullVolume = 150; // л.
         this.volume = volume; // л.
-        this.useVolume = 0
+        this.useVolume = 0 // л.
         this.lostVolume = 0; // л.
         this.bucketCounter = 0;
         this.maxBucketCounter = 9;
